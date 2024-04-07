@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/Addons.js'
-import redstoneLamp from '~/assets/images/redstone_lamp.png'
-import redstoneLampOn from '~/assets/images/redstone_lamp_on.png'
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'
 
 const el = ref<HTMLElement | null>(null)
 
@@ -20,14 +19,24 @@ onMounted(() => {
   renderer.setSize(window.innerWidth, window.innerHeight)
   el.value!.appendChild(renderer.domElement)
 
+  new RGBELoader().load('textures/modern_bathroom_1k.hdr', function (texture) {
+    texture.mapping = THREE.EquirectangularReflectionMapping
+    scene.background = texture
+    scene.environment = texture
+  })
+
   // 使用辅助器
   const controls = new OrbitControls(camera, renderer.domElement)
 
   controls.autoRotate = true
 
-  let redstoneLampTexture = new THREE.TextureLoader().load(redstoneLamp)
+  let redstoneLampTexture = new THREE.TextureLoader().load(
+    'textures/redstone_lamp.png',
+  )
 
-  let redstoneLampOnTexture = new THREE.TextureLoader().load(redstoneLampOn)
+  let redstoneLampOnTexture = new THREE.TextureLoader().load(
+    'textures/redstone_lamp_on.png',
+  )
 
   const geometry = new THREE.BoxGeometry(1, 1, 1)
   const material = new THREE.MeshBasicMaterial({ map: redstoneLampTexture })
