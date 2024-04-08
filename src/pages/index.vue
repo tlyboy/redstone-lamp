@@ -19,7 +19,7 @@ onMounted(() => {
   renderer.setSize(window.innerWidth, window.innerHeight)
   el.value!.appendChild(renderer.domElement)
 
-  new RGBELoader().load('textures/modern_bathroom_2k.hdr', function (texture) {
+  new RGBELoader().load('textures/modern_bathroom_1k.hdr', function (texture) {
     texture.mapping = THREE.EquirectangularReflectionMapping
     scene.background = texture
     scene.environment = texture
